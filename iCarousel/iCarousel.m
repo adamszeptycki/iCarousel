@@ -2156,6 +2156,15 @@ NSComparisonResult compareViewDepth(UIView *view1, UIView *view2, iCarousel *sel
                 _previousTranslation = _vertical? [panGesture translationInView:self].y: [panGesture translationInView:self].x;
                 _startVelocity = -(_vertical? [panGesture velocityInView:self].y: [panGesture velocityInView:self].x) * factor * _scrollSpeed / _itemWidth;
                 _scrollOffset -= translation * factor * _offsetMultiplier / _itemWidth;
+                
+                CGFloat percentage;
+                if ([panGesture velocityInView:self].x > 0) {
+                    percentage = 1-(_scrollOffset-(int)_scrollOffset);
+
+                }else{
+                    percentage = (_scrollOffset-(int)_scrollOffset);
+                }
+                [_delegate caruselTransitionPercentage:percentage];
                 [self didScroll];
                 break;
             }
@@ -2167,6 +2176,8 @@ NSComparisonResult compareViewDepth(UIView *view1, UIView *view2, iCarousel *sel
         }
     }
 }
+
+
 
 #else
 
